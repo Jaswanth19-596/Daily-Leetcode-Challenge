@@ -9,15 +9,15 @@ class MyHashMap {
         }
     }
 
-    ArrayList<LinkedList<Pair>> list;
-    int size = 113;
+    ArrayList<ArrayList<Pair>> list;
+    int size = 3999;
 
 
     public MyHashMap() {
         list = new ArrayList<>();
 
         for(int i = 0;i<size;i++){
-            list.add(new LinkedList<>());
+            list.add(new ArrayList<>());
         }
     }
     
@@ -31,7 +31,7 @@ class MyHashMap {
         }
 
         // check if the key exists
-        LinkedList<Pair> tempList = list.get(index);
+        ArrayList<Pair> tempList = list.get(index);
         
         int i = 0;
         while(i < tempList.size()){
@@ -49,7 +49,7 @@ class MyHashMap {
     public int get(int key) {
         int index = key % size;
 
-        LinkedList<Pair> tempList = list.get(index);
+        ArrayList<Pair> tempList = list.get(index);
         int i = 0;
         while(i < tempList.size()){
             if(tempList.get(i).key == key){
@@ -64,7 +64,7 @@ class MyHashMap {
         int index = key % size;
 
         int i = 0;
-        LinkedList<Pair> tempList = list.get(index);
+        ArrayList<Pair> tempList = list.get(index);
 
         while( i < tempList.size()){
             if(tempList.get(i).key == key){
