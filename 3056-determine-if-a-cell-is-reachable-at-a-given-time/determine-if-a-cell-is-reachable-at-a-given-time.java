@@ -1,47 +1,14 @@
 class Solution {
     public boolean isReachableAtTime(int sx, int sy, int fx, int fy, int t) {
         
-
-        if(sx == fx && fy == sy && t == 1)    return false;
-
-        // On same row
-        if(fx == sx){
-            int minNoOfSteps = Math.abs(fy - sy);
-            return t >= minNoOfSteps;
-        }
-
-        if(fy == sy){
-            int minNoOfSteps = Math.abs(fx - sx);
-            return t >= minNoOfSteps;
-        }
-
-        int downDistance = Math.abs(fx - sx);
-
-        int stDistance = Math.abs(fy - sy);
-
-        String nearer = "";
-
-        if(downDistance < stDistance){
-            nearer = "Down";
-        }
-        else if(stDistance < downDistance){
-            nearer = "st";
-        }
-
-        int min = 0;
-        int max = 0;
-        if(nearer.equals("st")){
-            min = Math.abs(fy - sy);
-            max = Math.abs(fx - sx);
-        }
-        else if(nearer.equals("Down")){
-            min = Math.abs(fx - sx);
-            max = Math.abs(fy - sy);
-        }
-        else{
-            return t >= Math.abs(fy - sy);
-        }       
+        if(sx == fx && sy == fy && t == 1)  return false;
         
-        return t >= min + (max - min);
+        int horDist = Math.abs(fy - sy);
+        int verDist = Math.abs(fx - sx);
+
+        int min_time = Math.max(horDist, verDist);
+
+        return t >= min_time;
+       
     }
 }
