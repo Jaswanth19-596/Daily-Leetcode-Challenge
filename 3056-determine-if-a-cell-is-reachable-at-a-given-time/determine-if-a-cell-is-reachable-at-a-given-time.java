@@ -28,7 +28,6 @@ class Solution {
             nearer = "st";
         }
 
-        System.out.println(nearer);
         int min = 0;
         int max = 0;
         if(nearer.equals("st")){
@@ -42,7 +41,7 @@ class Solution {
         else{
             return t >= Math.abs(fy - sy);
         }       
-        System.out.println(min + (max - min));
+        
         return t >= min + (max - min);
     }
 }
