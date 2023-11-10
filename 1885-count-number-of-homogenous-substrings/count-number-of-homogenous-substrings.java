@@ -10,12 +10,12 @@ class Solution {
                 n += 1;
             }
             else{
-                long temp = ((((n%mod) * ((n + 1)%mod)) % mod)/2)%mod;
+                long temp = ((n* (n + 1)) % mod)/2;
                 res = (res + temp) % mod;
                 n = 1;
             }
         }
-        long temp = ((((n%mod) * ((n + 1)%mod)) % mod)/2)%mod;
+        long temp = ((n * (n + 1)) % mod)/2;
         res = (res%mod + temp%mod);
     
         return (int)res;
