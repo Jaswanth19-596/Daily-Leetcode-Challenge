@@ -66,13 +66,9 @@ class Solution {
             break;
         }
 
-        System.out.println(set);
-
         ArrayList<Integer> list = new ArrayList<>();
 
         dfs(startPoint, new HashSet<Integer>(), list, adj);
-
-        int n = adjacentPairs.length + 1;
 
         int res[] = new int[list.size()];
 
