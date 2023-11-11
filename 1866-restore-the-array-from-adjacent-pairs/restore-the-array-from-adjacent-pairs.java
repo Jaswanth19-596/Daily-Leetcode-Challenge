@@ -24,13 +24,6 @@ class Solution {
         
         HashMap<Integer,ArrayList<Integer>> adj = new HashMap<>();
 
-        // for(int i = 0;i<adjacentPairs.length;i++){
-        //     adj.add(new ArrayList<>());
-        //     adj.put()
-        // }
-
-        Set<Integer> set = new HashSet<>();
-
         for(int edge[] : adjacentPairs){
 
             if(adj.containsKey(edge[0]) == false){
@@ -42,29 +35,18 @@ class Solution {
 
             adj.get(edge[0]).add(edge[1]);
             adj.get(edge[1]).add(edge[0]);
-
-
-            if(set.contains(edge[1])){
-                set.remove(edge[1]);
-            }
-            else{
-                set.add(edge[1]);
-            }
-
-            if(set.contains(edge[0])){
-                set.remove(edge[0]);
-            }
-            else{
-                set.add(edge[0]);
-            }
         }
 
         int startPoint = 0;
 
-        for(int ele : set){
-            startPoint = ele;
-            break;
+        for(Map.Entry<Integer, ArrayList<Integer>> e : adj.entrySet()){
+            if(e.getValue().size() == 1){
+                startPoint = e.getKey();
+                break;
+            }
         }
+
+
 
         ArrayList<Integer> list = new ArrayList<>();
 
