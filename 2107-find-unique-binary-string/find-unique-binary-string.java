@@ -32,29 +32,38 @@ class Solution {
 //         return res;
         
         
-        Set<Integer> set1 = new HashSet<>();
-        for(String str : nums){
-            set1.add(Integer.parseInt(str,2));
+//         Set<Integer> set1 = new HashSet<>();
+//         for(String str : nums){
+//             set1.add(Integer.parseInt(str,2));
+//         }
+        
+//         // System.out.println(set1);
+        
+//         for(int i = 0;i<=nums.length;i++){
+//             if(set1.contains(i) == false){
+                
+//                 String res = Integer.toBinaryString(i);
+//                 int n = res.length();
+                
+//                 for(int j = 0;j<nums.length-n;j++){
+//                     res = '0'+res;
+                
+//                 }
+//                 return res;
+                
+//             }
+//         }
+        
+//         return "";
+        
+        
+        String res = "";
+        
+        for(int i = 0;i<nums.length;i++){
+            res = res + (nums[i].charAt(i) == '1' ? '0' : '1');
         }
         
-        // System.out.println(set1);
-        
-        for(int i = 0;i<=nums.length;i++){
-            if(set1.contains(i) == false){
-                
-                String res = Integer.toBinaryString(i);
-                int n = res.length();
-                
-                for(int j = 0;j<nums.length-n;j++){
-                    res = '0'+res;
-                
-                }
-                return res;
-                
-            }
-        }
-        
-        return "";
+        return res;
         
         
         
