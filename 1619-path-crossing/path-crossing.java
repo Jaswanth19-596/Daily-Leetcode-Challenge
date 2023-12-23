@@ -13,9 +13,6 @@ class Solution {
                 case 'W' : x = x - 1; break;
                 case 'S' : y = y - 1; break;
             }
-
-            System.out.println(x + " "+y);
-
             if(set.contains(x+" "+y)){
                 return true;
             }
