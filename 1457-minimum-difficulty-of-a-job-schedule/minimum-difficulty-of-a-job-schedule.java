@@ -1,50 +1,45 @@
 class Solution {
 
+    public int solve(int index, int days, int arr[], int dp[][]){
+       if(days == 1){
 
-    public int solve(int ind, int days, int arr[], int dp[][]){
-        if(days == 0){
-            if(ind == arr.length){
-                return 0;
-            }
-            else{
-                return 100000;
-            }
-        }
+           int temp = 0;
 
-        if(ind == arr.length)   return 100000;
+           for(int i = index;i<arr.length;i++){
+               temp = Math.max(temp, arr[i]);
+           }
+           return temp;
+       }
 
-        if(dp[ind][days] != -1) return dp[ind][days];
+        if(dp[index][days] != -1)   return dp[index][days];
 
-        int max = arr[ind];
+        int maxEffort = arr[index];
+
         int res = Integer.MAX_VALUE;
 
-        for(int j = ind;j < arr.length;j++){
+        for(int i = index;i <= arr.length - days;i++){
 
-            max = Math.max(max, arr[j]);
+            maxEffort = Math.max(maxEffort, arr[i]);
 
-            int ans = solve(j+1, days - 1, arr, dp);
-
-            if(ans != -1){
-                ans = max + ans;
-                res = Math.min(res, ans);
-            }else{
-                
-            }           
+            int ans = solve(i+1,days - 1, arr, dp);
+            
+            res = Math.min(res, ans + maxEffort);
+            
         }
 
-
-        return dp[ind][days] = res == Integer.MAX_VALUE ? 0 : res;
+        return dp[index][days] = res;
     }
 
 
     public int minDifficulty(int[] jobDifficulty, int d) {
-        if(d > jobDifficulty.length)   return -1;
-        int dp[][] = new int[jobDifficulty.length + 1][d+1];
+
+        if(d > jobDifficulty.length)    return -1;
+
+        int dp[][]  = new int[jobDifficulty.length + 1][d+1];
 
         for(int arr[] : dp){
             Arrays.fill(arr, -1);
         }
-
 
         return solve(0,d,jobDifficulty, dp);
     }
