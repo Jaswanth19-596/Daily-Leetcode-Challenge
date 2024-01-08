@@ -21,6 +21,9 @@ class Solution {
 
         if(root == null)    return 0;
 
+        if(root.val < low)  return getSum(root.right, low, high);
+        if(root.val > high) return getSum(root.left, low, high);
+
         int leftSum = getSum(root.left, low, high);
         int rightSum = getSum(root.right, low, high);
 
