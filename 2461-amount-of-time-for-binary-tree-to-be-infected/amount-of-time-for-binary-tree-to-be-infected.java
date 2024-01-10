@@ -15,51 +15,98 @@
  */
 class Solution {
 
+    void traverse(TreeNode root, HashMap<Integer, ArrayList<Integer>> adj){
 
-    HashMap<TreeNode, TreeNode> parent = new HashMap<>();
-    TreeNode target = null;
-
-    void getNode(TreeNode root, int key){
-        if(root == null)    return;
-        if(root.val == key) this.target = root;
+        if(root == null || (root.left == null && root.right == null))    return;
         
-        parent.put(root.left, root);
-        parent.put(root.right, root);
-            
-        getNode(root.right, key);
-        getNode(root.left, key);
+        TreeNode parent = root;
+        TreeNode child1 = root.left;
+        TreeNode child2 = root.right;
+
+
+        if(child1 != null){
+            if(adj.containsKey(parent.val)){
+                ArrayList<Integer> list = adj.get(parent.val);
+                list.add(child1.val);
+                adj.put(parent.val, list);
+            }
+            else{
+                ArrayList<Integer> list = new ArrayList<Integer>();
+                list.add(child1.val);
+                adj.put(parent.val, list);
+            }
+
+             if(adj.containsKey(child1.val)){
+                ArrayList<Integer> list = adj.get(child1.val);
+                list.add(parent.val);
+                adj.put(child1.val, list);
+            }
+            else{
+                ArrayList<Integer> list = new ArrayList<Integer>();
+                list.add(parent.val);
+                adj.put(child1.val, list);
+            }
+        }
+
+        if(child2 != null){
+              if(adj.containsKey(parent.val)){
+                ArrayList<Integer> list = adj.get(parent.val);
+                list.add(child2.val);
+                adj.put(parent.val, list);
+            }
+            else{
+                ArrayList<Integer> list = new ArrayList<Integer>();
+                list.add(child2.val);
+                adj.put(parent.val, list);
+            }
+
+             if(adj.containsKey(child2.val)){
+                ArrayList<Integer> list = adj.get(child2.val);
+                list.add(parent.val);
+                adj.put(child2.val, list);
+            }
+            else{
+                ArrayList<Integer> list = new ArrayList<Integer>();
+                list.add(parent.val);
+                adj.put(child2.val, list);
+            }
+        }
+        traverse(root.left, adj);
+        traverse(root.right, adj);        
     }
 
 
-    int getMaxDistance(TreeNode root, Set<TreeNode> set){
+    int dfs(int node, Set<Integer> set, HashMap<Integer, ArrayList<Integer>> adj){
 
-        if(root == null)    return 0;
-        // if(root.left == null && root.right == null) return 1;
-        if(set.contains(root))  return 0;
+        if(set.contains(node))   return 0;
 
-        set.add(root);
-        
-        int left =  getMaxDistance(root.left, set);
-        int right = getMaxDistance(root.right, set);
-        int parentNode = getMaxDistance(parent.get(root), set);
-        
-        int max = Math.max(left, right);
+        set.add(node);
 
-        return 1+Math.max(max, parentNode);
-
+        int max = 0;
+        System.out.println(node);
+        if (adj.containsKey(node) && adj.get(node) != null) {
+    for (int child : adj.get(node)) {
+        int res = dfs(child, set, adj);
+        max = Math.max(res, max);
     }
+}
+
+        set.remove(node);
+        return 1 + max;
+    }
+
 
 
     public int amountOfTime(TreeNode root, int start) {
+        HashMap<Integer, ArrayList<Integer>> adj = new HashMap<>();
 
-        getNode(root, start);
-        Set<TreeNode> set = new HashSet<>();
-        set.add(target);
-       int dist1 = getMaxDistance(target.left, set);
-       int dist2 = getMaxDistance(target.right, set);
-       int dist3 = getMaxDistance(parent.get(target), set);
-        // System.out.println(dist3);
-        // return dist3;
-       return Math.max(Math.max(dist1, dist2), dist3);
+
+        traverse(root,adj);
+        // System.out.println(adj);
+
+        Set<Integer> set = new HashSet<>();
+
+        return dfs(start, set, adj)-1;
+
     }
 }
