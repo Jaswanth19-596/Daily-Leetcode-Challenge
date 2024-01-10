@@ -15,98 +15,44 @@
  */
 class Solution {
 
-    void traverse(TreeNode root, HashMap<Integer, ArrayList<Integer>> adj){
+    HashMap<TreeNode, TreeNode> parent = new HashMap<>();
+    TreeNode infected = null;
 
-        if(root == null || (root.left == null && root.right == null))    return;
+    void traverse(TreeNode root, int key){
+        if(root == null)    return;
+        if(root.val == key) this.infected = root;
         
-        TreeNode parent = root;
-        TreeNode child1 = root.left;
-        TreeNode child2 = root.right;
-
-
-        if(child1 != null){
-            if(adj.containsKey(parent.val)){
-                ArrayList<Integer> list = adj.get(parent.val);
-                list.add(child1.val);
-                adj.put(parent.val, list);
-            }
-            else{
-                ArrayList<Integer> list = new ArrayList<Integer>();
-                list.add(child1.val);
-                adj.put(parent.val, list);
-            }
-
-             if(adj.containsKey(child1.val)){
-                ArrayList<Integer> list = adj.get(child1.val);
-                list.add(parent.val);
-                adj.put(child1.val, list);
-            }
-            else{
-                ArrayList<Integer> list = new ArrayList<Integer>();
-                list.add(parent.val);
-                adj.put(child1.val, list);
-            }
-        }
-
-        if(child2 != null){
-              if(adj.containsKey(parent.val)){
-                ArrayList<Integer> list = adj.get(parent.val);
-                list.add(child2.val);
-                adj.put(parent.val, list);
-            }
-            else{
-                ArrayList<Integer> list = new ArrayList<Integer>();
-                list.add(child2.val);
-                adj.put(parent.val, list);
-            }
-
-             if(adj.containsKey(child2.val)){
-                ArrayList<Integer> list = adj.get(child2.val);
-                list.add(parent.val);
-                adj.put(child2.val, list);
-            }
-            else{
-                ArrayList<Integer> list = new ArrayList<Integer>();
-                list.add(parent.val);
-                adj.put(child2.val, list);
-            }
-        }
-        traverse(root.left, adj);
-        traverse(root.right, adj);        
+        parent.put(root.left, root);
+        parent.put(root.right, root);
+            
+        traverse(root.right, key);
+        traverse(root.left, key);
     }
 
-
-    int dfs(int node, Set<Integer> set, HashMap<Integer, ArrayList<Integer>> adj){
-
-        if(set.contains(node))   return 0;
-
-        set.add(node);
-
-        int max = 0;
-        System.out.println(node);
-        if (adj.containsKey(node) && adj.get(node) != null) {
-    for (int child : adj.get(node)) {
-        int res = dfs(child, set, adj);
-        max = Math.max(res, max);
+    int getMaxDistance(TreeNode root, Set<TreeNode> set){
+        if(root == null)    return 0;
+        // if(root.left == null && root.right == null) return 1;
+        if(set.contains(root))  return 0;
+        set.add(root);
+        
+        int left =  getMaxDistance(root.left, set);
+        int right = getMaxDistance(root.right, set);
+        int parentNode = getMaxDistance(parent.get(root), set);
+        
+        int max = Math.max(left, right);
+        return 1+Math.max(max, parentNode);
     }
-}
-
-        set.remove(node);
-        return 1 + max;
-    }
-
-
 
     public int amountOfTime(TreeNode root, int start) {
-        HashMap<Integer, ArrayList<Integer>> adj = new HashMap<>();
 
+        traverse(root, start);
 
-        traverse(root,adj);
-        // System.out.println(adj);
-
-        Set<Integer> set = new HashSet<>();
-
-        return dfs(start, set, adj)-1;
-
+        Set<TreeNode> set = new HashSet<>();
+        set.add(infected);
+       int dist1 = getMaxDistance(infected.left, set);
+       int dist2 = getMaxDistance(infected.right, set);
+       int dist3 = getMaxDistance(parent.get(infected), set);
+     
+       return Math.max(Math.max(dist1, dist2), dist3);
     }
 }
