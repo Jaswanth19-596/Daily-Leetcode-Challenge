@@ -34,7 +34,9 @@ class Solution {
 
     public int maxAncestorDiff(TreeNode root) {
         if(root == null)    return 0;
+
         traverse(root, root.val, root.val);
+        
         return this.ans;
     }
 }
