@@ -29,11 +29,10 @@ class RandomizedSet {
 
         int index = map.get(val);
 
-        if(index < list.size() - 1){
-            int lastElement = list.get(list.size()-1);
-            list.set(index, lastElement);
-            map.put(lastElement, index);
-        }       
+        int lastElement = list.get(list.size()-1);
+        list.set(index, lastElement);
+        map.put(lastElement, index);
+               
                
         list.remove(list.size()-1);
 
