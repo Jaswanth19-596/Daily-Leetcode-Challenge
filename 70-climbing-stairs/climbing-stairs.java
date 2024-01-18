@@ -1,21 +1,27 @@
 class Solution {
 
-    int climb(int n, int dp[]){
 
-        if(n == 0){
-            return 1;
-        }
-        if(n < 0)   return 0;
+    int func(int step, int n, int dp[]){
 
-        if(dp[n] != -1) return dp[n];
+        if(step == n)   return 1;
 
-        return dp[n] = climb(n-2, dp) + climb(n-1, dp);
+        if(step > n)    return 0;
+
+        if(dp[step] != -1) return dp[step];
+
+
+        int oneStep = func(step + 1, n, dp);
+        int twoSteps = func(step + 2 , n, dp);
+
+        return dp[step] = oneStep + twoSteps;
+
     }
-
 
     public int climbStairs(int n) {
         int dp[] = new int[n+1];
+
         Arrays.fill(dp, -1);
-        return climb(n, dp);
+
+        return func(0, n, dp);
     }
 }
