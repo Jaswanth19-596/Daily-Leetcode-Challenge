@@ -1,27 +1,25 @@
 class Solution {
     public int[] findErrorNums(int[] nums) {
-        
-       Set<Integer> set = new HashSet<>();
-        int max = nums.length;
-        int []res = new int[2];
+        int n = nums.length;
+        int actualSum = (n * (n+1))/2;
 
-       for(int ele : nums){
-           if(set.contains(ele)){
-               res[0] = ele;
-           }
-           else{
-               set.add(ele);
-           }
-       }
+        int currentSum = 0;
 
+        boolean []visited = new boolean[nums.length+1];
 
-       for(int i = 1;i <= max;i++){
-           if(set.contains(i) == false){
-               res[1] = i;
-               return res;
-           }
-       }
+        int repeating = 0;
 
-       return res;
+        for(int ele : nums){
+
+            if(visited[ele] == true){
+                repeating = ele;
+                continue;
+            }
+
+            visited[ele] = true;
+            currentSum += ele;
+        }
+
+        return new int[] {repeating, actualSum - currentSum};
     }
 }
