@@ -1,7 +1,4 @@
-class Solution {
-
-
-    int getLongest(int i, int j, String str1, String str2, int dp[][]){
+class Solution {    int getLongest(int i, int j, String str1, String str2, int dp[][]){
 
         if(i == str1.length() || j == str2.length())  return 0;
 
