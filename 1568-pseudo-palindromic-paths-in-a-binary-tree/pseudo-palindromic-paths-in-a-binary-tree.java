@@ -50,7 +50,6 @@ class Solution {
 
             int res = checkPalindrome(map,n+1);
             if(res == 1){
-                System.out.println(map+" "+(n+1));
             }
             if(map.get(root.val) == 1)  map.remove(root.val);
             else{
