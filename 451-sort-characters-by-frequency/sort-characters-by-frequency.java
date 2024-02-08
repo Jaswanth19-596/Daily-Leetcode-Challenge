@@ -1,6 +1,18 @@
 class Solution {
 
 
+    class MyComparator implements Comparator<Pair>{
+
+        public int compare(Pair p1, Pair p2){
+            if(p1.freq > p2.freq)   return -1;
+            if(p1.freq == p2.freq && p1.ch > p2.ch) return -1;
+            return 1;
+        }
+
+
+    }
+
+
     class Pair implements Comparable<Pair>{
         char ch;
         int freq;
@@ -28,22 +40,24 @@ class Solution {
 
         Pair []p = new Pair[map.size()];
 
-        int i = 0;
+
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>(new MyComparator());
+
         for(Map.Entry<Character, Integer> e : map.entrySet()){
             int freq = e.getValue();
             char ch = e.getKey();
-            p[i] = new Pair(ch, freq);
-            i++;
+            pq.add(new Pair(ch, freq));
         }
 
-        Arrays.sort(p);
-
         String res = "";
-        for(Pair p1 : p){
+
+        while(pq.size() > 0){
+            Pair p1 = pq.poll();
             int freq = p1.freq;
             char ch = p1.ch;
 
-            while(freq -- > 0){
+            while(freq-- > 0){
                 res += ch;
             }
         }
