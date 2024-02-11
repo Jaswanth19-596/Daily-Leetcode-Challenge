@@ -1,32 +1,41 @@
-class MyComparator implements Comparator<int []>{
+class Solution {
 
-    public int compare(int []arr1, int []arr2){
-        if(arr1[1] < arr2[1])   return -1;
-        return 1;
+    public int solve(int i, int prev, boolean visited[], int [][]pairs, int dp[][]){
+
+        if(i == visited.length) return 0;
+        if(i < 0)   return 0;
+
+        if(visited[i] == true)  return solve(i+1, prev, visited, pairs, dp);
+
+        if(dp[i][prev+1] != -1) return dp[i][prev+1];
+
+
+        int pick = 0;
+        int notpick = 0;
+        notpick = solve(i+1, prev, visited, pairs, dp);
+       
+        if(prev == -1 || pairs[prev][1] < pairs[i][0]){
+            visited[i] = true;
+            pick = 1 + solve(i+1, i, visited, pairs, dp);
+            int goBack = 1 + solve(0, i, visited, pairs, dp);
+            pick = Math.max(pick, goBack);
+            visited[i] = false;
+        }
+       
+        return dp[i][prev + 1] = Math.max(pick, notpick);
     }
 
 
-}
-
-class Solution {
 
     public int findLongestChain(int[][] pairs) {
-        // return 0;
-        Arrays.sort(pairs, new MyComparator());
+        int prev = -1;
 
-        int max = pairs[0][1];
-        int count = 1;
-        for(int i = 1;i<pairs.length;i++){
+        int dp[][] = new int[1001][1001];
 
-            if(pairs[i][0] > max){
-                max = pairs[i][1];
-                count++;
-            }
-        }
+        for(int arr[] : dp) Arrays.fill(arr, -1);
 
-        return count;
+        boolean visited[] = new boolean[pairs.length];
 
-
-
+        return solve(0, prev, visited, pairs, dp);
     }
 }
