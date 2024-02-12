@@ -56,9 +56,28 @@ class Solution {
     public int longestStrChain(String[] words) {
         Arrays.sort(words, new MyComparator());
 
-        int dp[][] = new int[1001][1001];
-        for(int arr[] : dp) Arrays.fill(arr, -1);
+        int dp[][] = new int[words.length + 1][words.length+1];
+        // for(int arr[] : dp) Arrays.fill(arr, -1);
 
-        return solve(0, -1, words, dp);
+        int n = words.length;
+
+        int max = 0;
+
+        for(int i = n-1;i>=0;i--){
+            for(int j = i-1;j>=0;j--){
+                int pick = 0;
+                if(check(words[j], words[i])){
+                    pick = 1 + dp[i+1][i];
+                }
+                int notpick = dp[i+1][j];
+                dp[i][j] = Math.max(pick, notpick);
+                max = Math.max(max, dp[i][j]);
+            }
+        }
+
+        // System.out.println(Arrays.deepToString(dp));
+
+        return max+1;
+        // return solve(0, -1, words, dp);
     }
 }
