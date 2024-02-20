@@ -1,12 +1,17 @@
 class Solution {
     public int missingNumber(int[] nums) {
-        int sum = 0;
+        
+        int xor = 0;
 
-        for(int ele : nums) sum += ele;
+        for(int i = 0;i<=nums.length;i++){
+            xor = xor ^ i;
+        }
 
-        int total = (nums.length * (nums.length + 1))/2;
+        for(int ele : nums){
+            xor = xor ^ ele;
+        }
 
-        return total - sum;
+        return xor;
 
     }
 }
