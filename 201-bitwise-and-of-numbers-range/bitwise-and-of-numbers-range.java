@@ -1,20 +1,15 @@
 class Solution {
     public int rangeBitwiseAnd(int left, int right) {
 
-        if((left & (left - 1)) == 0){
-            if(((long)2 * (long)left) == (long)right+1)    return left;
-        }
-        
-
-        long x = Integer.MAX_VALUE;
-        long i = left;
         int count = 0;
-        while(i <= right){
-            x &= i;
-            if(x == 0)  return 0;
-            i++;
+        while(left != right){            
+            left = left >> 1;
+            right = right >> 1;
+            if(right == 0)  return 0;
+            count+=1;
         }
-        return (int)x;
+
+        return left << count;
 
     }
 }
