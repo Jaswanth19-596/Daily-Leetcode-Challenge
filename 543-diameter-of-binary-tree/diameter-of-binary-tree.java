@@ -15,33 +15,26 @@
  */
 class Solution {
 
-    int height(TreeNode root){
-
-        if(root == null)    return 0;
-
-        int left = height(root.left);
-        int right = height(root.right);
-
-        return 1 + Math.max(left, right);
-    }
-
-
+    static int DIA = 0;
+    
     int findDiameter(TreeNode root){
 
         if(root == null)    return 0;
 
-        int leftHeight = height(root.left);
-        int rightHeight = height(root.right);
+        int left = findDiameter(root.left);
+        int right = findDiameter(root.right);
 
-        int diamterOfCurrentNode = leftHeight + rightHeight;
-        int diamterOfLeftTree = findDiameter(root.left);
-        int diamterOfRightTree = findDiameter(root.right);
+        DIA = Math.max(DIA, left + right);
 
-        return Math.max(diamterOfCurrentNode, Math.max(diamterOfLeftTree, diamterOfRightTree));
+        return 1 + Math.max(left, right);
+       
     }
 
 
     public int diameterOfBinaryTree(TreeNode root) {
-        return findDiameter(root);
+        // O(n)
+        DIA = 0;
+        findDiameter(root);
+        return DIA;
     }
 }
