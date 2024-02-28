@@ -15,27 +15,30 @@
  */
 class Solution {
 
-    static int level = 0;
-    static int nodeValue = 0;
+    public int findBottomLeftValue(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
 
-    void traverse(TreeNode root, int currLevel){
-        if(root == null)    return;
+        int res = root.val;
+        queue.add(root);
 
-        traverse(root.right, currLevel + 1);
 
-        if(currLevel >= level){
-            level = currLevel;
-            nodeValue = root.val;
+        while(queue.size() != 0){
+
+            res = queue.peek().val;
+            
+            int n = queue.size();
+
+            for(int i = 0;i<n;i++){
+                TreeNode node = queue.poll();
+                if(node.left != null){
+                    queue.add(node.left);
+                }
+                if(node.right != null){
+                    queue.add(node.right);
+                }
+            }
         }
 
-        traverse(root.left, currLevel + 1);
-    }
-
-
-    public int findBottomLeftValue(TreeNode root) {
-        level = 0;
-        nodeValue = root.val;
-        traverse(root, 0);
-        return nodeValue;
+        return res;
     }
 }
