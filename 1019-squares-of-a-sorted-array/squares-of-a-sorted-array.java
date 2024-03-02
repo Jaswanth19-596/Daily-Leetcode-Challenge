@@ -23,8 +23,6 @@ class Solution {
             index--;
         }
 
-        return res;
-
-        
+        return res;        
     }
 }
