@@ -1,21 +1,21 @@
 class Solution {
     public int maxFrequencyElements(int[] nums) {
-        int arr[] = new int[101];
+        int freq[] = new int[101];
 
-        int maxFreq = 0;
+        int maxFreq = 0, count = 0;
+
         for(int ele : nums){
-            arr[ele]++;
+            freq[ele]++;
 
-            maxFreq = Math.max(maxFreq, arr[ele]);
-        }
-        int count = 0;
-        for(int ele : arr){
-            if(ele == maxFreq){
-                count = count + ele;
+            if(freq[ele] > maxFreq){
+                maxFreq = freq[ele];
+                count = freq[ele];
+            }
+            else if(freq[ele] == maxFreq){
+                count = count + freq[ele];
             }
         }
+
         return count;
-
-
     }
 }
