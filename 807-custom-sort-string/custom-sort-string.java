@@ -1,33 +1,51 @@
+
+   class MyComparator implements Comparator<Character>{
+        Map<Character, Integer> map;
+
+        MyComparator(Map<Character, Integer> map){
+            this.map = map;
+        }
+
+
+        public int compare(Character  ch1, Character  ch2){
+            if(map.get(ch1) < map.get(ch2)){
+                return -1;
+            }
+            else if(map.get(ch1) > map.get(ch2)){
+                return 1;
+            }
+            return 0;
+        }
+    }
+
 class Solution {
-    public String customSortString(String order, String s) {
+
+     public String customSortString(String order, String s) {
        
-        Map<Character, Integer> map = new HashMap<>();
+       HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+       int i = 0;
+       for(char ch : order.toCharArray()){
+           map.put(ch, i++);
+       }
 
-        for(char ch : s.toCharArray()){
-            map.put(ch, map.getOrDefault(ch, 0)+1);
+       for(char ch = 'a'; ch<='z';ch++){
+           if(map.containsKey(ch) == false){
+               map.put(ch, Integer.MAX_VALUE);
+           }
+       }
+
+       Character[] ch = new Character[s.length()];
+        for (int j = 0; j < s.length(); j++) {
+            ch[j] = s.charAt(j);
         }
+
+       Arrays.sort(ch, new MyComparator(map));
         String res = "";
-        for(char ch : order.toCharArray()){
-            if(map.containsKey(ch)){
-                int freq = map.get(ch);
-                for(int i = 0;i<freq;i++){
-                    res = res + ch;
-                }
-                map.remove(ch);
-            }
-        }
+       for(char c : ch){
+           res += c;
+       }      
 
-        for(Map.Entry<Character, Integer> e : map.entrySet()){
-            char key = e.getKey();
-            int value = e.getValue();
-
-            for(int i = 0;i<value;i++){
-                res = res + key;
-            }
-        }
-
-        return res;
-
+       return res;
 
     }
 }
