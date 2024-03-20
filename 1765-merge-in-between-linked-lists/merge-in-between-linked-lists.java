@@ -10,52 +10,46 @@
  */
 class Solution {
 
+
     ListNode getTail(ListNode head){
-        ListNode ptr = head;
+        ListNode tail = head;
 
-        while(ptr.next != null){
-            ptr = ptr.next;
+        while(tail.next != null){
+            tail = tail.next;
         }
-
-        return ptr;
+        return tail;
     }
 
-    ListNode move(ListNode head, int a){
-        ListNode ptr = head;
+    ListNode move(ListNode list, int n){
+
+        ListNode ptr = list;
 
         int i = 0;
 
-        while(i < a){
+        while(i < n){
 
             ptr = ptr.next;
+
             i++;
         }
 
-        return ptr;      
+        return ptr;
+
     }
 
 
 
     public ListNode mergeInBetween(ListNode list1, int a, int b, ListNode list2) {
-        
-        ListNode secondListHead = list2;
-        ListNode secondListTail = getTail(list2);
+        ListNode head = list2;
+        ListNode tail = getTail(list2);
 
-        // ListNode temp = new ListNode(0);
 
-        // temp.next = list1;
+        ListNode ptr1 = move(list1, a-1);
+        ListNode ptr2 = move(list1, b);
 
-        ListNode firstPtr = move(list1, a-1);
-        ListNode secondPtr = move(list1, b);
-
-        // System.out.println(firstPtr.val);
-        // System.out.println(secondPtr.val);
-        // System.out.println(secondListTail.val);
-        
-        firstPtr.next = secondListHead;
-        secondListTail.next = secondPtr.next;
-
-        secondPtr.next = null;
+        ptr1.next = head;
+        tail.next = ptr2.next;
+        ptr2.next = null;
 
         return list1;
 
