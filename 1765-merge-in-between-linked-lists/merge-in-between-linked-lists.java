@@ -41,12 +41,12 @@ class Solution {
         ListNode secondListHead = list2;
         ListNode secondListTail = getTail(list2);
 
-        ListNode temp = new ListNode(0);
+        // ListNode temp = new ListNode(0);
 
-        temp.next = list1;
+        // temp.next = list1;
 
-        ListNode firstPtr = move(temp, a);
-        ListNode secondPtr = move(temp, b+1);
+        ListNode firstPtr = move(list1, a-1);
+        ListNode secondPtr = move(list1, b);
 
         // System.out.println(firstPtr.val);
         // System.out.println(secondPtr.val);
@@ -57,7 +57,7 @@ class Solution {
 
         secondPtr.next = null;
 
-        return temp.next;
+        return list1;
 
 
     }
