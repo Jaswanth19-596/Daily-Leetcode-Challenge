@@ -10,78 +10,62 @@
  */
 class Solution {
 
-
     int length(ListNode head){
-        ListNode ptr = head;
-
         int count = 0;
-
+        ListNode ptr = head;
         while(ptr != null){
-            count++;
             ptr = ptr.next;
+            count++;
         }
-
         return count;
     }
 
+    ListNode reverse(ListNode head){
 
-
-    public void reorderList(ListNode head) {
-        
-        ListNode ptr = head;
-
-        int n = length(head);
-
-        if(n <= 2)  return;
-
-        int i = 0;
-
-        while(i < ((n/2) - 1)){
-            ptr = ptr.next;
-            i++;
-        }
-
-        ListNode head2 = ptr.next;
-        ptr.next = null;
-
-
-
-        Stack<ListNode> stack = new Stack<>();
-        ListNode ptr2 = head2;
-
-        while(ptr2 != null){
-            stack.push(new ListNode(ptr2.val));
-
-            ptr2 = ptr2.next;
-        }
-
-
-        ListNode curr = head;
+        ListNode curr = head, prev = null;
 
         while(curr != null){
             ListNode next = curr.next;
-
-            curr.next = stack.pop();
-
-            curr = curr.next;
-            curr.next = next;
+            curr.next = prev;
+            prev = curr;
             curr = next;
         }
 
-        curr = head;
+        return prev;
 
-        while(curr.next != null){
-            curr = curr.next;
+
+    }
+
+
+    public void reorderList(ListNode head) {
+        int count = length(head);
+
+        if(count <= 2)  return;
+
+        int skip = (count + 1)/2 - 1;
+
+        ListNode ptr = head;
+        for(int i = 0;i<skip;i++){
+            ptr = ptr.next;
         }
 
-        while(stack.size() > 0){
-            curr.next = stack.pop();
-            curr = curr.next;
+        ListNode list2 = ptr.next;
+        ptr.next = null;
+
+        ListNode revList2 = reverse(list2);
+
+        ListNode ptr1 = head, ptr2 = revList2;
+
+        while(ptr1 != null && ptr2 != null){
+            ListNode next1 = ptr1.next;
+            ListNode next2 = ptr2.next;
+
+            ptr1.next = ptr2;
+            ptr2.next = next1;
+
+            ptr1 = next1;
+            ptr2 = next2;
         }
-
-
-
-        // return head;
 
 
     }
