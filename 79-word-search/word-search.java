@@ -9,13 +9,26 @@ class Solution {
         if(visited[i][j])   return false;
 
         if(board[i][j] != str.charAt(index))    return false;
-        
+
         visited[i][j] = true;
 
         // explore all ways
         boolean right = search(i, j + 1, index + 1, board, str, visited);
+
+        if(right){
+            visited[i][j] = false;
+            return true;
+        }   
         boolean down = search(i+1, j , index + 1, board, str, visited);
+        if(down){
+            visited[i][j] = false;
+            return true;
+        }    
         boolean left = search(i, j - 1, index + 1, board, str, visited);
+        if(left){
+            
+            return true;
+        }    
         boolean up = search(i-1, j , index + 1, board, str, visited);
 
         visited[i][j] = false;
