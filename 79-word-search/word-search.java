@@ -26,13 +26,13 @@ class Solution {
         }    
         boolean left = search(i, j - 1, index + 1, board, str, visited);
         if(left){
-            
+            visited[i][j] = false;
             return true;
         }    
         boolean up = search(i-1, j , index + 1, board, str, visited);
 
         visited[i][j] = false;
-        return right || down || left || up;
+        return up;
 
     }
 
