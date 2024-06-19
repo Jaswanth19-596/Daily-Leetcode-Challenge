@@ -1,29 +1,11 @@
 class Solution {
 
 
-    int getMin(int []arr){
-        int res = Integer.MAX_VALUE;
-        for(int ele : arr){
-            res = Math.min(ele, res);
-        }
-        return res;
-    }
-
-    int getMax(int []arr){
-        int res = Integer.MIN_VALUE;
-        for(int ele : arr){
-            res = Math.max(ele, res);
-        }
-        return res;
-    }
-
-
     public int minDays(int[] bloomDay, int m, int k) {
         
 
         // I'll APply binary search on the bloomday.
-        // Min value and max value will be from bloomday.
-        int min = getMin(bloomDay);
+        int min = 1;
         int max = (int)1e9;
 
         int res = -1;
@@ -37,7 +19,7 @@ class Solution {
             int bouques = 0;
             int flowers = 0;
 
-
+// 50000
             int count = 0;
 
             for(int i = 0;i<bloomDay.length;i++){
