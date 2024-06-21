@@ -1,66 +1,42 @@
 class Solution {
-    public int maxSatisfied(int[] customers, int[] grumpy, int min) {
+    public int maxSatisfied(int[] customers, int[] grumpy, int minutes) {
         
-        int sum = 0;
+        int initialSatisfaction = 0;
 
-        for(int ele : customers){
-            sum += ele;
-        }
-        if(min >= grumpy.length){
-            return sum;
-        }
-
-
-
-        int n = customers.length;
-        int satisfied[] = new int[n];
-
-
-        int totalSatisfied = 0;
-        for(int i = 0;i<n;i++){
-            if(grumpy[i] == 1){
-                satisfied[i] = -customers[i];
-            }
-            else{
-                satisfied[i] = customers[i];
-                totalSatisfied += satisfied[i];
+        for(int i = 0;i<customers.length;i++){
+            if(grumpy[i] != 1){
+                initialSatisfaction += customers[i];
             }
         }
 
         int low = 0, high = 0;
-        int unsatisfied = 0;
-        int satisfiedInThisBlock = 0;
-        while(high < min){
+        int windowSatisfaction = 0;
+        while(high < minutes){
 
-            if(satisfied[high] < 0){
-                unsatisfied += Math.abs(satisfied[high]);
+            if(grumpy[high] == 1){
+                windowSatisfaction += customers[high];
             }
             high++;
         }
 
-        int res = totalSatisfied + unsatisfied;
+        int maxSatisfaction = initialSatisfaction + windowSatisfaction;
+        while(high < customers.length){
 
-
-
-        while(high < n){
-
-            if(satisfied[low] < 0){
-                unsatisfied += satisfied[low];
+            if(grumpy[low] == 1){
+                windowSatisfaction -= customers[low];
             }
             low++;
 
-            if(satisfied[high] < 0){
-                unsatisfied += Math.abs(satisfied[high]);
+            if(grumpy[high] == 1){
+                windowSatisfaction += customers[high];
             }
             high++;
 
-            res = Math.max(res, totalSatisfied + unsatisfied);
+            maxSatisfaction = Math.max(initialSatisfaction + windowSatisfaction, maxSatisfaction);
+
         }
-        return res;
 
-
-
-
+        return maxSatisfaction;
 
 
     }
