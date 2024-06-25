@@ -19,7 +19,7 @@ class Solution {
         if(arr[mid] > arr[mid - 1] && arr[mid] > arr[mid + 1]){
             return mid;
         }
-        else if(arr[mid] > arr[mid + 1]){
+        else if(arr[mid] < arr[mid - 1]){
             return peak(low, mid - 1, arr);
         }
         return peak(mid + 1, high, arr);
