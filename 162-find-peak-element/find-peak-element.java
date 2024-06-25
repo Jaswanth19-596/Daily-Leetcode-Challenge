@@ -3,12 +3,12 @@ class Solution {
 
 
     int peak(int low, int high, int []arr){
-        if(high < 0){
-            return 0;
-        }
-        if(low > arr.length){
-            return arr.length;
-        }
+        // if(high < 0){
+        //     return 0;
+        // }
+        // if(low > arr.length){
+        //     return arr.length;
+        // }
 
         if(low == high){
             return low;
