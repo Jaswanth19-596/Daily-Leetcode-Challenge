@@ -1,30 +1,14 @@
 class Solution {
     public int findCenter(int[][] edges) {
         
-        Map<Integer, ArrayList<Integer>> adj = new HashMap<>();
+        int []edge1 = edges[0];
+        int []edge2 = edges[1];
 
-        for(int i = 1;i<=edges.length + 1;i++){
-            adj.put(i, new ArrayList<>());
+        if(edge1[0] == edge2[0] || edge1[0] == edge2[1]){
+            return edge1[0];
         }
-
-
-        for(int [] edge : edges){
-            int node1 = edge[0];
-            int node2 = edge[1];
-
-            adj.get(node1).add(node2);
-            adj.get(node2).add(node1);
-
-            if(adj.get(node1).size() == edges.length){
-                return node1;
-            }
-            if(adj.get(node2).size() == edges.length){
-                return node2;
-            }
+        else{
+            return edge1[1];
         }
-
-        return -1;
-
-
     }
 }
