@@ -1,28 +1,15 @@
 class Solution {
     public int passThePillow(int n, int time) {
-       
-       int i = 1, direction = 1;
+        
+        time = time % ((2 * n) - 2);
 
-       while(time > 0){
-
-        if(direction == 1){
-            i++;
+        if(time < n){
+            return 1 + time;
         }
         else{
-            i--;
+            time = time - n + 1;
+            return n - time;
         }
-
-        if(i == n){
-            direction = -1;
-        }
-        if(i == 1){
-            direction = 1;
-        }
-
-        time--;
-       }
-
-       return i;
 
     }
 }
