@@ -1,22 +1,23 @@
 class Solution:
     def findLHS(self, nums: List[int]) -> int:
         
-        freq = {}
+        nums.sort()
 
-        for ele in nums:
-            if ele in freq:
-                freq[ele] += 1
+        l = 0
+        r = 1
+        result = 0
+
+
+        while r < len(nums):
+
+            diff = nums[r] - nums[l]
+
+            if diff == 1:
+                result = max(result, r - l + 1)
+                r += 1
+            elif diff > 1:
+                l += 1
             else:
-                freq[ele] = 1
+                r +=1
 
-        maxSequence = 0
-
-        for ele in nums:
-
-            if ele + 1 in freq:
-                maxSequence = max(maxSequence, freq[ele] + freq[ele + 1])
-            
-            if ele - 1 in freq:
-                maxSequence = max(maxSequence, freq[ele] + freq[ele - 1])
-
-        return maxSequence
+        return result
