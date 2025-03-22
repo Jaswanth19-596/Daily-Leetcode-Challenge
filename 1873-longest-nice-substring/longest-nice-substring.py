@@ -1,55 +1,50 @@
 class Solution:
 
 
-    def isNiceSubstring(self, string):
+    def func(self, string, start, end):
 
-        dict1 = {}
-
-        for i in range(26):
-            capital = chr(65 + i)
-            small = chr(97 + i)
-
-            dict1[capital] = 0
-            dict1[small] = 0
+        if start > end:
+            return ""
         
-        for ch in string:
+        if start == end:
+            return ""
 
-            dict1[ch] = 1
+        freq = {}
 
-        for ch in string:
+        for i in range(0, 26):
 
-            if ch.islower() and dict1[chr(ord(ch) - 32)] == 0:
-                return False
-                
-            if ch.isupper() and dict1[chr(ord(ch) + 32)] == 0:
-                return False
+            freq[chr(97 + i)] = 0
+            freq[chr(65 + i)] = 0
 
-        return True
+        
+        for i in range(start, end + 1):
+
+            freq[string[i]] = 1
+
+        
+        for i in range(start, end + 1):
+            ch = string[i]
+
+            if (ch.islower() and freq[chr(ord(ch) - 32)] == 0) or (ch.isupper() and freq[chr(ord(ch) + 32)] == 0):
+                str1 = self.func(string, start, i - 1)
+                str2 = self.func(string, i + 1, end)
+
+                if len(str1) >= len(str2):
+                    return str1
+                else:
+                    return str2
+
+        return string[start : end + 1]
+
+        
 
 
 
 
 
     def longestNiceSubstring(self, s: str) -> str:
-        # 1. Generate all possible substrings
-        # 2. For every substring:
-            # 3. Create a dictionary that has all the alphabets.
-            # 4. Traverse the substring and then populate the dictionary.
-            # 5. And then again traverse the substring and for every character, check for both small and capital versions.
-            # 6. If charater is small : check for character and character - 32
-            # 7. If character is capital : check for character and character + 32
-        longestSubstring = ""
-        for i in range(len(s)):
-            substr = ""
-            for j in range(i, len(s)):
-                substr += s[j]
-
-                res = self.isNiceSubstring(substr)
-
-                if res == True and len(substr) > len(longestSubstring):
-                    longestSubstring = substr
-
-        return longestSubstring
-
+        res = self.func(s, 0, len(s) - 1)
+        
+        return res
 
 
