@@ -1,25 +1,30 @@
 class Solution:
     def divisorSubstrings(self, num: int, k: int) -> int:
         
-        # Create a new variable as a string version of num
-        # create n substrings of length k and then convert them to integer and check if it is a divisor.
-        # increment the count
+        # create a string variable out of num
+        # Keep two pointers i and j  which represent the start and end of window
+        # slice from string and then convert to integer and check if it's a divisor
 
-        string = str(num)   
 
+        string = str(num)
+
+        start = 0
+        end = 0
+
+        for i in range(k - 1):
+            end += 1
+
+        
         count = 0
 
-        for i in range(len(string) - k + 1):
-            
-            currNum = ""
-            for j in range(i, i + k):
+        for i in range(k-1 , len(string)):
 
-                currNum += string[j]
+            substr = string[start: end + 1]
 
-                if int(currNum) == 0:
-                    continue
-                
-                if len(currNum) == k and num % int(currNum) == 0:
-                    count += 1
+            if int(substr) != 0 and num % int(substr) == 0:
+                count += 1
 
-        return count
+            start += 1
+            end += 1
+
+        return count 
