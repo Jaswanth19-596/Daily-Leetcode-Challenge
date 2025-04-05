@@ -1,30 +1,24 @@
 class Solution:
     def longestNiceSubarray(self, nums: List[int]) -> int:
-
+        
         if len(nums) == 1:
             return 1
 
-        longest = 1
+        
+        res = 1
 
-        start, end = 0, 1
-
-        curr = nums[start]
+        start, end = 0, 0
+        currWindow = 0
 
         while end < len(nums):
 
-            while (curr & nums[end]) != 0:  # If there is a conflict
-                curr ^= nums[start]  # Remove nums[start] from used_bits
-                start += 1  # Shrink the window
+            while end < len(nums) and currWindow & nums[end] == 0:
+                currWindow = currWindow | nums[end]
+                end += 1
+                res = max(res, end - start)
 
-            curr |= nums[end]  # Add nums[end] to OR
-            longest = max(longest, end - start + 1) 
+            while start < end and end < len(nums) and currWindow & nums[end] != 0:
+                currWindow = currWindow ^ nums[start]
+                start += 1
 
-            end += 1
-
-     
-
-
-        return longest
-
-
-
+        return res
