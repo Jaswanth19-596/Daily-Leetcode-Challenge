@@ -1,21 +1,28 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         
+        # Using sliding window
+        # i will have two pointers
+        # one points to the end of window and the other points to start of window
+        # i will use a set
+        # This set will help me to identify duplicates
+
         if len(s) <= 1:
             return len(s)
 
+        start = 0
+        end = 0
+        seen = set()
         maxLength = 0
 
-        for i in range(len(s)):
+        while end < len(s):
 
-            seen = set()
-            for j in range(i, len(s)):
+            while s[end] in seen:
+                seen.remove(s[start])
+                start += 1
 
-                if s[j] in seen:
-                    break
-                
-                seen.add(s[j])
-                maxLength = max(maxLength, j - i + 1)
-                
+            seen.add(s[end])
+            maxLength = max(maxLength, end - start + 1)
+            end += 1
 
         return maxLength
