@@ -27,8 +27,8 @@ class Solution:
 
     def maxSumTwoNoOverlap(self, nums: List[int], firstLen: int, secondLen: int) -> int:
 
-        if firstLen < secondLen:
-            firstLen, secondLen = secondLen, firstLen
+        # if firstLen < secondLen:
+        #     firstLen, secondLen = secondLen, firstLen
 
 
         firstPrefixArr = self.createPrefixArr(nums, firstLen)
